@@ -77,7 +77,6 @@ int is_valid(Node *n) {
       }
     }
   }
-
   return 1;
 }
 
@@ -114,7 +113,25 @@ int is_final(Node *n) {
   return 1;
 }
 
-Node *DFS(Node *initial, int *cont) { return NULL; }
+Node *DFS(Node *initial, int *cont) { 
+  Stack *S = createStack();
+  push(S, initial);
+  while (get_size(S) != 0){
+    Node *n = top(S);
+    pop(S);
+    if (is_final(n)) {
+      return n;
+    }
+    List *list = get_adj_nodes(n);
+    Node *aux = first(list);
+    while (aux) {
+      push(S, aux);
+      aux = next(list);
+    }
+    free(n);
+  }
+  return NULL;
+}
 
 /*
 int main( int argc, char *argv[] ){
