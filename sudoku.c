@@ -45,76 +45,58 @@ void print_node(Node *n) {
 int is_valid(Node *n) {
   int i, j, k;
   for (i = 0; i < 9; i++) {
+    int row[10] = {0};
+    int col[10] = {0};
     for (j = 0; j < 9; j++) {
-      if (n->sudo[i][j] == 0)
-        continue;
-      for (k = 0; k < 9; k++) {
-        if (k == j)
-          continue;
-        if (n->sudo[i][k] == n->sudo[i][j])
+      if (n->sudo[i][j] != 0) {
+        if (row[n->sudo[i][j]]) {
           return 0;
-      }
-      for (k = 0; k < 9; k++) {
-        if (k == i)
-          continue;
-        if (n->sudo[k][j] == n->sudo[i][j])
-          return 0;
-      }
-      for (k = 0; k < 9; k++) {
-        if (k == i)
-          continue;
-        if (k == j)
-          continue;
-        if (n->sudo[k][k] == n->sudo[i][j])
-          return 0;
-      }
-      for (k = 0; k < 9; k++) {
-        if (k == i)
-          continue;
-        if (k == j)
-          continue;
-        if (n->sudo[k][8 - k] == n->sudo[i][j])
-          return 0;
-      }
-    }
-  }
-  return 1;
-}
-
-List *get_adj_nodes(Node *n) {
-  List *list = createList();
-  int i, j;
-  for (i = 0; i < 9; i++) {
-    for (j = 0; j < 9; j++) {
-      if (n->sudo[i][j] == 0) {
-        int k;
-        for (k = 1; k < 10; k++) {
-          Node *adj = copy(n);
-          adj->sudo[i][j] = k;
-          if (is_valid(adj)) {
-            pushBack(list, adj);
-          }
         }
-        return list;
+        row[n->sudo[i][j]] = 1;
+      }
+      if (n->sudo[j][i] != 0) {
+        if (col[n->sudo[j][i]]) {
+          return 0;
+        }
+        col[n->sudo[j][i]] = 1;
       }
     }
   }
-  return list;
-}
 
-int is_final(Node *n) { return 0; }
+  List *get_adj_nodes(Node * n) {
+    List *list = createList();
+    int i, j;
+    for (i = 0; i < 9; i++) {
+      for (j = 0; j < 9; j++) {
+        if (n->sudo[i][j] == 0) {
+          int k;
+          for (k = 1; k < 10; k++) {
+            Node *adj = copy(n);
+            adj->sudo[i][j] = k;
+            if (is_valid(adj)) {
+              pushBack(list, adj);
+            }
+          }
+          return list;
+        }
+      }
+    }
+    return list;
+  }
 
-Node *DFS(Node *initial, int *cont) { return NULL; }
+  int is_final(Node * n) { return 0; }
 
-/*
-int main( int argc, char *argv[] ){
+  Node *DFS(Node * initial, int *cont) { return NULL; }
 
-  Node* initial= read_file("s12a.txt");;
+  /*
+  int main( int argc, char *argv[] ){
 
-  int cont=0;
-  Node* final = DFS(initial, &cont);
-  printf("iterations:%d\n",cont);
-  print_node(final);
+    Node* initial= read_file("s12a.txt");;
 
-  return 0;
-}*/
+    int cont=0;
+    Node* final = DFS(initial, &cont);
+    printf("iterations:%d\n",cont);
+    print_node(final);
+
+    return 0;
+  }*/
