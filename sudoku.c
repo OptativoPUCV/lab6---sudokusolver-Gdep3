@@ -45,14 +45,14 @@ void print_node(Node *n) {
 int is_valid(Node *n) {
   int i, j, k;
   for (i = 0; i < 9; i++) {
-    int row[10] = {0};
+    int fil[10] = {0};
     int col[10] = {0};
     for (j = 0; j < 9; j++) {
       if (n->sudo[i][j] != 0) {
-        if (row[n->sudo[i][j]]) {
+        if (fil[n->sudo[i][j]]) {
           return 0;
         }
-        row[n->sudo[i][j]] = 1;
+        fil[n->sudo[i][j]] = 1;
       }
       if (n->sudo[j][i] != 0) {
         if (col[n->sudo[j][i]]) {
@@ -102,7 +102,17 @@ List *get_adj_nodes(Node *n) {
   return list;
 }
 
-int is_final(Node *n) { return 0; }
+int is_final(Node *n) {
+  int i, j;
+  for (i = 0; i < 9; i++) {
+    for (j = 0; j < 9; j++) {
+      if (n->sudo[i][j] == 0) {
+        return 0;
+      }
+    }
+  }
+  return 0;
+}
 
 Node *DFS(Node *initial, int *cont) { return NULL; }
 
