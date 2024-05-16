@@ -53,3 +53,17 @@ test.c:7:8: error: ‘_strdup’ defined but not used [-Werror=unused-function]
 cc1: all warnings being treated as errors
 Compilation failed
 2b9b356
+Thu 16 May 2024 05:12:12 PM UTC: 
+ sudoku.c | 1 +
+ 1 file changed, 1 insertion(+)
+In file included from test.c:5:
+sudoku.c: In function ‘is_valid’:
+sudoku.c:46:13: error: unused variable ‘k’ [-Werror=unused-variable]
+   46 |   int i, j, k;
+      |             ^
+sudoku.c:65:1: error: control reaches end of non-void function [-Werror=return-type]
+   65 | }
+      | ^
+cc1: all warnings being treated as errors
+Compilation failed
+76f580f
